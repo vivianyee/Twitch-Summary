@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nextjs-app:
+    build: ./nextjs-app
+    ports:
+      - "3001:3000"
+    depends_on:
+      - yt-dlp-server
+
+  yt-dlp-server:
+    build: ./yt-dlp-server
+    ports:
+      - "3000:3000"
