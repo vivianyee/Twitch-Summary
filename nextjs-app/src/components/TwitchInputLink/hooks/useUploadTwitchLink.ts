@@ -1,14 +1,21 @@
-import { downloadVOD } from "@/lib/twitch";
-
 export const useUploadTwitchLink = () => {
-    const onClickUploadTwitchLink = async (videoId: string) => {
-        const res = await fetch(`/api/getTwitchData?videoId=987654321`)
+  const onClickUploadTwitchLink = async (videoId: string) => {
+    const res = await fetch(`/api/getTwitchData?videoId=987654321`);
 
-        const { vodData } = await res.json();
-        console.log(vodData)
-
-        return vodData
+    if (!res.ok) {
+      return { error: "Something went wrong" };
     }
 
-    return { onClickUploadTwitchLink }
-}
+    const { vodData, error } = await res.json();
+
+    if (!vodData || error) {
+      console.log(error);
+      return error;
+    }
+
+    console.log(vodData);
+    return vodData;
+  };
+
+  return { onClickUploadTwitchLink };
+};
